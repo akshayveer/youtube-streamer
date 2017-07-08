@@ -1,5 +1,6 @@
 let gapi_state = 0;
 let youtube_search_results = []
+const NUM_SEARCH_RESULTS = 10;
 
 function SearchResultRow(title, description, thumbnail_url, videoId) {
   this.title = title;
@@ -34,7 +35,7 @@ function executeRequest(search_query) {
   gapi.client.request({
     path: '/youtube/v3/search',
     params: {
-      'maxResults': '25',
+      'maxResults': NUM_SEARCH_RESULTS,
        'part': 'snippet',
        'q': search_query,
        'type': ''

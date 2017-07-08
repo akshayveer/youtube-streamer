@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style media="screen">
       form{
         text-align: center;
@@ -21,14 +22,38 @@
         min-width: 400px;
         min-height: 800px;
       }
+      .item {
+        cursor: pointer;
+      }
+      .item img{
+        width: 120px;
+        height: 120px;
+        display: inline;
+        padding: 20px;
+      }
+      .header{
+        display: inline;
+        padding: 5px;
+      }
+      .header h4{
+        margin-top: 0px;
+      }
     </style>
   </head>
   <body>
     <form>
       <input id="search_term" type="text" name="name" placeholder="search">
     </form>
-    <div id="search-container">
-
+    <div id="search-results">
+      <div class="item">
+        <img src="http://via.placeholder.com/100x100" alt="" align="left"/>
+        <div class="header">
+          <h4 >Hello</h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+          </p>
+        </div>
+      </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
     <script src="https://apis.google.com/js/api.js"></script>
