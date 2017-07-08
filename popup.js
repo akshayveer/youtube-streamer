@@ -1,19 +1,33 @@
 let gapi_state = 0;
+let youtube_search_results = []
+
+function SearchResultRow(title, description, thumbnail_url, videoId) {
+  this.title = title;
+  this.description = description;
+  this.thumbnail_url = thumbnail_url;
+  this.videoId = videoId;
+}
 
 function start() {
+  gapi_state = 1;
   gapi.client.init({
     'apiKey': 'AIzaSyD98bluzT_oxioGc1iLm_2_O242U2f7cvU',
     'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
   }).then(function (response) {
-    gapi_state = 1;
+    gapi_state = 2;
     console.log('gapi initialized');
   }, function (error) {
+    gapi_state = 3;
     console.log(error);
   });
 };
 
 function loadClient() {
-  gapi.load('client', start);
+  if (gapi_state == 0){
+    gapi.load('client', start);
+  } else {
+    console.log('gapi initialization already started');
+  }
 }
 
 function executeRequest(search_query) {
@@ -26,19 +40,35 @@ function executeRequest(search_query) {
        'type': ''
     }
   }).then(function (response) {
-    console.log(response);
+    youtube_search_results = response.result.items;
+    showResults();
   }, function (reason) {
     console.error(reason);
   });
 }
 
 function search(search_query) {
-  executeRequest(search_query);
+  if (gapi_state == 0){
+    loadClient();
+    console.log('please wait gapi is getting initialized');
+  } else if (gapi_state == 1){
+    console.log('please wait gapi is initializing');
+  } else if (gapi_state == 2){
+    youtube_search_results.length = 0;
+    executeRequest(search_query);
+  } else if (gapi_state == 3){
+    console.log('previous initialization failed');
+  }
+}
+
+function showResults() {
+  console.log(youtube_search_results);
 }
 
 $('#search_term').keypress(function (e) {
   if (e.which == 13) {
-    console.log(e.target.value);
+    e.preventDefault();
+    search(e.target.value);
     return false;
   }
 });
