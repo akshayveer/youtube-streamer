@@ -64,6 +64,26 @@ function search(search_query) {
 
 function showResults() {
   console.log(youtube_search_results);
+  youtube_search_results.forEach(function (item) {
+    let img = $("<img />");
+    img.attr('src', item.snippet.thumbnails.default.url);
+    // img.attr('width', item.snippet.thumbnails.default.width);
+    // img.attr('height', item.snippet.thumbnails.default.height);
+
+    let header = $("<div class='header'></div>");
+    let heading = $("<h4></h4>");
+    heading.text(item.snippet.title);
+
+    let description = $("<p></p>")
+    description.text(item.snippet.description);
+
+    let row = $("<div class='item'></div>");
+    row.append(img);
+    header.append(heading);
+    header.append(description);
+    row.append(header);
+    $('#search-results').append(row);
+  });
 }
 
 $('#search_term').keypress(function (e) {
@@ -74,5 +94,9 @@ $('#search_term').keypress(function (e) {
   }
 });
 
+$(document).ready(function () {
+  console.log('load client called from ready');
+  loadClient();
+})
 // to know more about CSP read below article
 // https://www.html5rocks.com/en/tutorials/security/content-security-policy/
