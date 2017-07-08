@@ -1,13 +1,22 @@
+let gapi_state = 0;
+
 function start() {
-  console.log('gapi loaded');
+  gapi.client.init({
+    'apiKey': 'AIzaSyD98bluzT_oxioGc1iLm_2_O242U2f7cvU',
+    'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
+  }).then(function () {
+    gapi_state = 1;
+    console.log('gapi initialized');
+  });
 };
 
 function loadClient() {
   gapi.load('client', start);
 }
 
-$('.input').keypress(function (e) {
+$('#search_term').keypress(function (e) {
   if (e.which == 13) {
+    console.log(e.target.value);
     return false;
   }
 });
